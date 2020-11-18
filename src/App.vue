@@ -1,17 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Welcome to my Vue3 Pet Project</h1>
+   <!--  <CustomInput
+      :v-model:modelValue="email"
+    /> -->
+    <TodoForm/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import { ref, watch } from 'vue';
+// import CustomInput from './components/CustomInput.vue';
+import TodoForm from './components/TodoForm.vue';
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // CustomInput,
+    TodoForm
+  },
+  setup() {
+    const email = ref('');
+      console.log('The new email value is: ' + email.value)
+
+    watch(email, (newValue) => {
+      console.log('The new email value is: ' + newValue)
+    })
+    return {
+      email
+    }
   }
 }
 </script>
