@@ -1,6 +1,8 @@
 
 <template>
-	<form>
+	<form
+		@submit.prevent="handleSubmit"
+	>
 		<TodoInput
 			v-model:todoTitle.capitalize="newTodo.todoTitle"
 			v-model:todoIsDone="newTodo.todoIsDone"
@@ -16,14 +18,31 @@ export default {
 	components: {
 		TodoInput
 	},
-	setup() {
-		const newTodo = reactive({
+	props: {
+		addTodo: {
+			type: Function
+		}
+	},
+	setup(props) {
+		const initialTodoState = {
 			todoTitle: '',
 			todoIsDone: false
-		});
+		}
+		const newTodo = reactive({...initialTodoState});
+
+		const clearForm = () => {
+			Object.assign(newTodo, initialTodoState);
+		}
+
+		const handleSubmit = () => {
+			props.addTodo({...newTodo, _id: new Date()});
+			clearForm();
+		}
 
 		return {
-			newTodo
+			newTodo,
+			handleSubmit,
+			clearForm
 		}
 	}
 }

@@ -1,33 +1,34 @@
 <template>
   <div id="app">
     <h1>Welcome to my Vue3 Pet Project</h1>
-   <!--  <CustomInput
-      :v-model:modelValue="email"
-    /> -->
-    <TodoForm/>
+    <TodoForm
+      :addTodo="addNewTodo"
+    />
+    <p v-for="todo in todos" :key="todo._id">
+      {{todo.todoTitle}}
+    </p>
+
   </div>
 </template>
 
 <script>
 
-import { ref, watch } from 'vue';
-// import CustomInput from './components/CustomInput.vue';
+import { ref } from 'vue';
 import TodoForm from './components/TodoForm.vue';
 export default {
   name: 'App',
   components: {
-    // CustomInput,
     TodoForm
   },
   setup() {
-    const email = ref('');
-      console.log('The new email value is: ' + email.value)
+    const todos = ref([]);
+    const addNewTodo = (todo) => {
+      todos.value.push(todo);
+    }
 
-    watch(email, (newValue) => {
-      console.log('The new email value is: ' + newValue)
-    })
     return {
-      email
+      todos,
+      addNewTodo
     }
   }
 }

@@ -6,7 +6,7 @@
 			@input="handleTitleChange"
 		/>
 		<input
-			:value="todoIsDone"
+			:checked="todoIsDone"
 			type="checkbox"
 			@input="handleIsDoneToggle"
 		/>
