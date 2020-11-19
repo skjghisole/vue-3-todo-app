@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <h1>Welcome to my Vue3 Pet Project</h1>
+    <TodoList
+      :todos="todos"
+      @click="onClickTodo"
+    />
     <TodoForm
       :addTodo="addNewTodo"
     />
-    <p v-for="todo in todos" :key="todo._id">
-      {{todo.todoTitle}}
-    </p>
-
   </div>
 </template>
 
@@ -15,10 +15,12 @@
 
 import { ref } from 'vue';
 import TodoForm from './components/TodoForm.vue';
+import TodoList from './components/TodoList.vue';
 export default {
   name: 'App',
   components: {
-    TodoForm
+    TodoForm,
+    TodoList
   },
   setup() {
     const todos = ref([]);
@@ -26,9 +28,15 @@ export default {
       todos.value.push(todo);
     }
 
+    const onClickTodo = ({ target: { __vnode: { key } } }) => {
+      const index = todos.value.findIndex(todo => todo._id == key);
+      todos.value[index].todoIsDone = !todos.value[index].todoIsDone;
+    }
+
     return {
       todos,
-      addNewTodo
+      addNewTodo,
+      onClickTodo
     }
   }
 }
